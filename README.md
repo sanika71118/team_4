@@ -13,7 +13,7 @@ Today, machine learning is becoming more and more popular for predicting wine qu
  4- What is the range of wine quality scores, and how can we improve this range through analysis and recommendations?  
  5- How will understanding and improving wine quality benefit winemakers, distributors, and wine consumers?
 
-Modeling techniques:
-Logistic Regression
-K-Nearest Neighbours
-Decision trees 
+**Modeling techniques:**
+1- Logistic Regression
+2- K-Nearest Neighbours
+3- Decision trees 
