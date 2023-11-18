@@ -8,9 +8,13 @@ Today, machine learning is becoming more and more popular for predicting wine qu
 **Smart questions:**
 
  1- Do certain types of wine (red or white) tend to have higher quality scores on average?
+ 
  2- Can machine learning models accurately predict wine quality based on its chemical composition, and if yes, which algorithms perform the best? 
- 3- Can we quantitatively measure the correlations between all attributes and wine quality ratings?  
+ 
+ 3- Can we quantitatively measure the correlations between all attributes and wine quality ratings? 
+ 
  4- What is the range of wine quality scores, and how can we improve this range through analysis and recommendations?  
+ 
  5- How will understanding and improving wine quality benefit winemakers, distributors, and wine consumers?
 
 **Modeling techniques:**
