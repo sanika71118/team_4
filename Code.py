@@ -32,6 +32,14 @@ wine.describe().T
 
 # %%
 #Let's begin with EDA-
+#Lets check for null values.
+wine.isnull().sum()
+# %%
+#Lets plot a histogram to visualize data:
+import matplotlib.pyplot as plt
+import seaborn as sns
+wine.hist(bins=20 , figsize= (10,10))
+plt.show()
 
 
 # %%
@@ -80,3 +88,50 @@ plt.show()
 
 # %%
 #
+#%%
+#Distribution of Wines by Quality
+wine['quality'].value_counts().plot(kind='bar',figsize=(7, 6), rot=0)
+plt.xlabel("Quality")
+plt.ylabel("Count of wines")
+plt.title("Distribution of Wines by Quality")
+plt.show()
+
+#The number of ratings for wine quality '5' and '6' are much larger than that of 3 , 4 and 8.
+
+# %%
+#Let's do the correlation matrix for the variables 
+plt.figure(figsize = (30,30))
+sns.heatmap(wine.corr(),annot=True, cmap= 'rocket')
+
+#From the above heatmap we can conclude that the ‘total sulfur dioxide’ and ‘free sulphur dioxide‘ are highly correlated features
+
+# %%
+red_wines = wine[wine['Type'] == 'Red Wine']
+white_wines = wine[wine['Type'] == 'White Wine']
+
+# Descriptive statistics for quality scores
+print("Red Wine Quality Stats:")
+print(red_wines['quality'].describe())
+print("\nWhite Wine Quality Stats:")
+print(white_wines['quality'].describe())
+
+#%%
+plt.figure(figsize=(8, 6))
+sns.boxplot(x='Type', y='quality', data=wine)
+plt.xlabel('Wine Type')
+plt.ylabel('Quality Score')
+plt.title('Quality Scores by Wine Type')
+plt.show()
+# %%
+# Perform a statistical test (e.g., t-test) to compare quality scores
+
+from scipy.stats import ttest_ind
+t_stat, p_value = ttest_ind(red_wines['quality'], white_wines['quality'])
+print(f"T-Statistic: {t_stat}, p-value: {p_value}")
+
+""""
+The output of the t-test indicates a strong statistical significance.
+The t-statistic of approximately -21.52 suggests a substantial difference in the mean quality scores between red and white wines. Additionally, the p-value, which is significantly smaller than the conventional significance level of 0.05, further supports this difference.
+In simple terms, the test results suggest that there is a statistically significant difference in quality scores between red and white wines.
+
+"""
