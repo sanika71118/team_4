@@ -99,7 +99,7 @@ plt.show()
 # %%
 #Let's do the correlation matrix for the variables 
 plt.figure(figsize = (30,30))
-sns.heatmap(wine.corr(),annot=True, cmap= 'gnuplot2')
+sns.heatmap(wine.replace({'White Wine': 1, 'Red Wine': 0}).corr(),annot=True, cmap= 'gnuplot2')
 
 #From the above heatmap we can conclude that the ‘total sulfur dioxide’ and ‘free sulphur dioxide‘ are highly correlated features
 
