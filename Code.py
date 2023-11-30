@@ -196,3 +196,21 @@ predict2= model2.predict(X_test)
 accuracy2=accuracy_score(y_test, predict2)
 print(f"Accuracy: {accuracy2}")
 # %%
+
+
+from sklearn.linear_model import LogisticRegression
+
+# Logistic Regression
+model3 = LogisticRegression()
+
+# Train the model
+model3.fit(X_train, y_train)
+
+# Make predictions on the test set
+predict3 = model3.predict(X_test)
+
+# Evaluate the model
+accuracy3 = accuracy_score(y_test, predict3)
+print(f"Accuracy: {accuracy3}")
+
+# %%
