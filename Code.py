@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+from sklearn import metrics
 
 
 # %%
@@ -212,5 +213,13 @@ predict3 = model3.predict(X_test)
 # Evaluate the model
 accuracy3 = accuracy_score(y_test, predict3)
 print(f"Accuracy: {accuracy3}")
+
+# %%
+models=[model, model2, model3 ]
+y_pred = models[1].predict(X_test)
+print(metrics.confusion_matrix(y_test, y_pred))
+plt.show()
+# %%
+print(metrics.classification_report(y_test, models[1].predict(X_test)))
 
 # %%
