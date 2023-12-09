@@ -35,6 +35,8 @@ wine.describe().T
 #Let's begin with EDA-
 #Lets check for null values.
 wine.isnull().sum()
+
+
 # %%
 #Lets plot a histogram to visualize data:
 import matplotlib.pyplot as plt
@@ -52,6 +54,37 @@ plt.bar(average_quality_by_type.index, average_quality_by_type.values, color=['#
 plt.xlabel('Wine Type')
 plt.ylabel('Average Quality Score')
 plt.title('Average Quality Score by Wine Type')
+plt.show()
+
+#%%
+
+#Splitting the dataset into two new types red and white wine:
+red_wines = wine[wine['Type'] == 'Red Wine']
+white_wines = wine[wine['Type'] == 'White Wine']
+
+
+#%%
+#Correlation Between Attributes and Quality Ratings for Red Wines
+red_attributes = red_wines.drop(['quality', 'Type'], axis=1) 
+red_quality = red_wines['quality'] 
+red_correlation_matrix = red_attributes.corrwith(red_quality)
+plt.figure(figsize=(10, 8))
+sns.heatmap(red_correlation_matrix.to_frame(), annot=True, cmap='rainbow', cbar=True, fmt=".2f" )
+plt.title('Correlation Between Attributes and Red Wine Quality Ratings')
+plt.xlabel('Correlation Coefficient')
+plt.ylabel('Attributes')
+plt.show()
+
+
+#Correlation Between Attributes and Quality Ratings for White Wines
+white_attributes = white_wines.drop(['quality', 'Type'], axis=1) 
+white_quality = white_wines['quality'] 
+white_correlation_matrix = white_attributes.corrwith(white_quality)
+plt.figure(figsize=(10, 8))
+sns.heatmap(white_correlation_matrix.to_frame(), annot=True, cmap='rainbow', cbar=True, fmt=".2f" )
+plt.title('Correlation Between Attributes and White Wine Quality Ratings')
+plt.xlabel('Correlation Coefficient')
+plt.ylabel('Attributes')
 plt.show()
 
 
@@ -103,8 +136,7 @@ sns.heatmap(wine.replace({'White Wine': 1, 'Red Wine': 0}).corr(),annot=True, cm
 #From the above heatmap we can conclude that the ‘total sulfur dioxide’ and ‘free sulphur dioxide‘ are highly correlated features
 
 # %%
-red_wines = wine[wine['Type'] == 'Red Wine']
-white_wines = wine[wine['Type'] == 'White Wine']
+
 
 # Descriptive statistics for quality scores
 print("Red Wine Quality Stats:")
