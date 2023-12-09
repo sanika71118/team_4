@@ -46,7 +46,7 @@ plt.show()
 # %%
 # 1- Do certain types of wine (red or white) tend to have higher quality scores on average?
 
-# calculating the average quality scores
+# calculating the average quality scores of each type
 average_quality_by_type = wine.groupby('Type')['quality'].mean()
 plt.bar(average_quality_by_type.index, average_quality_by_type.values, color=['#C5B4E3', 'lightpink'])
 plt.xlabel('Wine Type')
