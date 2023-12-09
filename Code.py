@@ -85,9 +85,6 @@ plt.show()
 # %%
 # 5- How will understanding and improving wine quality benefit winemakers, distributors, and wine consumers?
 
-# %%
-#
-#%%
 #Distribution of Wines by Quality
 wine['quality'].value_counts().plot(kind='bar',figsize=(7, 6), rot=0, color="#C5B4E3")
 plt.xlabel("Quality")
@@ -222,4 +219,139 @@ plt.show()
 # %%
 print(metrics.classification_report(y_test, models[1].predict(X_test)))
 
+# %%[markdown]
+
+# Part - 2
+
+### Considering only the top 4 correlated features
+#### Features -> Alcohol, density, chlorides, volatile acidity
+
+
+
+#%%
+
+## 'alcohol' vs 'quality' plot
+
+# Box plot with switched axes
+plt.figure(figsize=(10, 6))
+sns.boxplot(x='quality', y='alcohol', data=wine, hue='Type', palette='viridis')
+
+# Set plot title and labels
+plt.title('Box Plot: Alcohol Content vs. Wine Quality')
+plt.xlabel('Quality')
+plt.ylabel('Alcohol (%)')
+
+# Display the plot
+plt.show()
+
+
+#%%
+
+## 'density' vs 'quality' plot
+
+# Violin plot
+plt.figure(figsize=(12, 8))
+sns.violinplot(x='quality', y='density', data=wine, hue='Type', split=True, palette='viridis')
+
+# Set plot title and labels
+plt.title('Distribution of Wine Quality Across Density Levels')
+plt.xlabel('Quality')
+plt.ylabel('Density')
+
+# Display the plot
+plt.show()
+
+
+#%%
+
+## 'volatile acidity' vs 'quality' plot
+
+# Bar plot
+plt.figure(figsize=(10, 6))
+sns.barplot(x='quality', y='volatile acidity', data=wine, hue='Type', palette='viridis')
+
+# Set plot title and labels
+plt.title('Average Volatile Acidity Across Wine Quality Levels')
+plt.xlabel('Quality')
+plt.ylabel('Average Volatile Acidity')
+
+# Display the plot
+plt.show()
+
+
 # %%
+new_attributes = wine.drop(['quality', 'best quality', 'fixed acidity', 'citric acid', 'residual sugar', 'free sulfur dioxide', 'total sulfur dioxide', 'pH', 'sulphates'], axis=1) 
+quality = wine['best quality'] 
+
+# %%
+
+#the data is split into training and testing with the ratio as 80:20
+X_train_new, X_test_new, y_train_new, y_test_new = train_test_split(new_attributes, quality, test_size=0.2, random_state=40)
+X_train_new.shape, X_test_new.shape
+
+# %%
+
+#we will now normalize the data using the Min Max Scaler 
+from sklearn.preprocessing import MinMaxScaler
+normalize = MinMaxScaler()
+X_train_new = normalize.fit_transform(X_train_new)
+X_test_new = normalize.transform(X_test_new)
+# %%
+
+# we will now model and fit the data using our Decision Trees 
+model_new = DecisionTreeClassifier()
+
+# Train the model
+model_new.fit(X_train_new, y_train_new)
+
+# Make predictions on the test set
+predict_new = model_new.predict(X_test_new)
+
+# Evaluate the model
+accuracy_new = accuracy_score(y_test_new, predict_new)
+print(f"Accuracy: {accuracy_new}")
+
+#%%
+
+## we will now model and fit the data using our Decision Trees 
+model2_new= KNeighborsClassifier()
+
+## Train the model
+model2_new.fit(X_train_new, y_train_new)
+
+# Make predictions on the test set
+predict2_new= model2_new.predict(X_test_new)
+
+# Evaluate the model0-
+accuracy2_new=accuracy_score(y_test_new, predict2_new)
+print(f"Accuracy: {accuracy2_new}")
+# %%
+
+
+from sklearn.linear_model import LogisticRegression
+
+# Logistic Regression
+model3_new = LogisticRegression()
+
+# Train the model
+model3_new.fit(X_train_new, y_train_new)
+
+# Make predictions on the test set
+predict3_new = model3_new.predict(X_test_new)
+
+# Evaluate the model
+accuracy3_new = accuracy_score(y_test_new, predict3_new)
+print(f"Accuracy: {accuracy3_new}")
+
+# %%
+models_new=[model_new, model2_new, model3_new ]
+y_pred_new = models_new[1].predict(X_test_new)
+print(metrics.confusion_matrix(y_test_new, y_pred_new))
+plt.show()
+# %%
+print(metrics.classification_report(y_test_new, models_new[1].predict(X_test_new)))
+
+
+#%%
+
+
