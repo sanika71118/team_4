@@ -31,17 +31,18 @@ wine.head()
 #Descriptive statistics of the dataset
 wine.describe().T
 
-# %%
-#Let's begin with EDA-
+#%%
 #Lets check for null values.
 wine.isnull().sum()
 
+# %%
+#Let's begin with EDA-
 
 # %%
 #Lets plot a histogram to visualize data:
 import matplotlib.pyplot as plt
 import seaborn as sns
-wine.hist(bins=20 , figsize= (10,10))
+wine.hist(bins=20 , figsize= (10,10), color='#C5B4E3')
 plt.show()
 
 
@@ -75,17 +76,6 @@ plt.xlabel('Correlation Coefficient')
 plt.ylabel('Attributes')
 plt.show()
 
-
-#Correlation Between Attributes and Quality Ratings for White Wines
-white_attributes = white_wines.drop(['quality', 'Type'], axis=1) 
-white_quality = white_wines['quality'] 
-white_correlation_matrix = white_attributes.corrwith(white_quality)
-plt.figure(figsize=(10, 8))
-sns.heatmap(white_correlation_matrix.to_frame(), annot=True, cmap='rainbow', cbar=True, fmt=".2f" )
-plt.title('Correlation Between Attributes and White Wine Quality Ratings')
-plt.xlabel('Correlation Coefficient')
-plt.ylabel('Attributes')
-plt.show()
 
 
 # %%
@@ -214,7 +204,7 @@ print(f"Accuracy: {accuracy}")
 
 #%%
 
-## we will now model and fit the data using our Decision Trees 
+## we will now model and fit the data using our KNN 
 model2= KNeighborsClassifier()
 
 ## Train the model
@@ -228,6 +218,7 @@ accuracy2=accuracy_score(y_test, predict2)
 print(f"Accuracy: {accuracy2}")
 # %%
 
+## we will now model and fit the data using our Logistic Regression
 
 from sklearn.linear_model import LogisticRegression
 
@@ -245,12 +236,32 @@ accuracy3 = accuracy_score(y_test, predict3)
 print(f"Accuracy: {accuracy3}")
 
 # %%
+
+#model validation
 models=[model, model2, model3 ]
+
+#%%
+#decision trees
+
+y_pred = models[0].predict(X_test)
+print(metrics.confusion_matrix(y_test, y_pred))
+plt.show()
+print(metrics.classification_report(y_test, models[0].predict(X_test)))
+
+# %%
+#knn
 y_pred = models[1].predict(X_test)
 print(metrics.confusion_matrix(y_test, y_pred))
 plt.show()
-# %%
 print(metrics.classification_report(y_test, models[1].predict(X_test)))
+
+#%%
+#logistic regression
+y_pred = models[2].predict(X_test)
+print(metrics.confusion_matrix(y_test, y_pred))
+plt.show()
+print(metrics.classification_report(y_test, models[2].predict(X_test)))
+
 
 # %%[markdown]
 
@@ -377,14 +388,31 @@ accuracy3_new = accuracy_score(y_test_new, predict3_new)
 print(f"Accuracy: {accuracy3_new}")
 
 # %%
+#model validation
 models_new=[model_new, model2_new, model3_new ]
-y_pred_new = models_new[1].predict(X_test_new)
-print(metrics.confusion_matrix(y_test_new, y_pred_new))
-plt.show()
-# %%
-print(metrics.classification_report(y_test_new, models_new[1].predict(X_test_new)))
-
 
 #%%
 
+#decision trees
+y_pred_new = models_new[0].predict(X_test_new)
+print(metrics.confusion_matrix(y_test_new, y_pred_new))
+print(metrics.classification_report(y_test_new, models_new[0].predict(X_test_new)))
 
+plt.show()
+# %%
+#knn
+y_pred_new = models_new[1].predict(X_test_new)
+print(metrics.confusion_matrix(y_test_new, y_pred_new))
+print(metrics.classification_report(y_test_new, models_new[1].predict(X_test_new)))
+
+plt.show()
+
+#%%
+
+#logistic regression
+
+y_pred_new = models_new[2].predict(X_test_new)
+print(metrics.confusion_matrix(y_test_new, y_pred_new))
+print(metrics.classification_report(y_test_new, models_new[2].predict(X_test_new)))
+
+plt.show()
