@@ -76,6 +76,16 @@ plt.xlabel('Correlation Coefficient')
 plt.ylabel('Attributes')
 plt.show()
 
+#Correlation Between Attributes and Quality Ratings for White Wines
+white_attributes = white_wines.drop(['quality', 'Type'], axis=1) 
+white_quality = white_wines['quality'] 
+white_correlation_matrix = white_attributes.corrwith(white_quality)
+plt.figure(figsize=(10, 8))
+sns.heatmap(white_correlation_matrix.to_frame(), annot=True, cmap='rainbow', cbar=True, fmt=".2f" )
+plt.title('Correlation Between Attributes and White Wine Quality Ratings')
+plt.xlabel('Correlation Coefficient')
+plt.ylabel('Attributes')
+plt.show()
 
 
 # %%
