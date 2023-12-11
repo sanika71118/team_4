@@ -57,6 +57,9 @@ plt.ylabel('Average Quality Score')
 plt.title('Average Quality Score by Wine Type')
 plt.show()
 
+
+
+
 #%%
 
 #Splitting the dataset into two new types red and white wine:
@@ -106,15 +109,14 @@ plt.show()
 # 4- What is the range of wine quality scores, and how can we improve this range through analysis and recommendations?
 
 quality_scores = wine['quality']
+
 plt.figure(figsize=(10, 8))
-plt.hist(quality_scores, bins=range(1, 11), edgecolor='black', alpha=0.7, color="lightpink")
+sns.barplot(x=quality_scores.value_counts().index, y=quality_scores.value_counts(), color="lightpink", edgecolor='black', alpha=0.7)
 plt.xlabel('Wine Quality Score')
 plt.ylabel('Frequency')
 plt.title('Distribution of Wine Quality Scores')
-plt.xticks(range(1, 11)) 
 plt.grid(axis='y', linestyle='--', alpha=0.7)
 plt.show()
-
 
 # %%
 # 5- How will understanding and improving wine quality benefit winemakers, distributors, and wine consumers?
@@ -130,10 +132,14 @@ plt.show()
 
 # %%
 #Let's do the correlation matrix for the variables 
-plt.figure(figsize = (30,30))
+plt.figure(figsize = (8,8))
+annot_kws = {"size":40}
 sns.heatmap(wine.replace({'White Wine': 1, 'Red Wine': 0}).corr(),annot=True, cmap= 'gnuplot2')
 
-#From the above heatmap we can conclude that the ‘total sulfur dioxide’ and ‘free sulphur dioxide‘ are highly correlated features
+#From the above heatmap we can conclude that the ‘total sulfur dioxide’ and ‘free sulphur dioxide‘ are highly correlated to each other
+#alcohol is related to quality
+#chloride is negatively related to quality
+#density is negatively related to quality 
 
 # %%
 
@@ -285,17 +291,15 @@ print(metrics.classification_report(y_test, models[2].predict(X_test)))
 #%%
 
 ## 'alcohol' vs 'quality' plot
+plt.figure(figsize=(10, 8))
 
-# Box plot with switched axes
-plt.figure(figsize=(10, 6))
-sns.boxplot(x='quality', y='alcohol', data=wine, hue='Type', palette='viridis')
+# Create a box plot
+sns.boxplot(x='quality', y='alcohol', data=wine, palette='viridis')
+plt.xlabel('Wine Quality')
+plt.ylabel('Alcohol Content')
+plt.title('Box Plot of Wine Quality and Alcohol Content')
 
-# Set plot title and labels
-plt.title('Box Plot: Alcohol Content vs. Wine Quality')
-plt.xlabel('Quality')
-plt.ylabel('Alcohol (%)')
-
-# Display the plot
+# Show the plot
 plt.show()
 
 
@@ -426,3 +430,6 @@ print(metrics.confusion_matrix(y_test_new, y_pred_new))
 print(metrics.classification_report(y_test_new, models_new[2].predict(X_test_new)))
 
 plt.show()
+
+
+#%%
