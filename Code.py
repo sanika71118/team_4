@@ -217,6 +217,17 @@ predict = model.predict(X_test)
 # Evaluate the model
 accuracy = accuracy_score(y_test, predict)
 print(f"Accuracy: {accuracy}")
+# Print feature importance coefficients
+print("\nFeature Importance:")
+for feature, importance in zip(wine.columns, model.feature_importances_):
+    print(f"{feature}: {importance}")
+
+print("\nConfusion Matrix:")
+y_pred = model.predict(X_test)
+print(metrics.confusion_matrix(y_test, y_pred))
+plt.show()
+print("\nClassification report:")
+print(metrics.classification_report(y_test, model.predict(X_test)))
 
 #%%
 
@@ -232,6 +243,14 @@ predict2= model2.predict(X_test)
 # Evaluate the model0-
 accuracy2=accuracy_score(y_test, predict2)
 print(f"Accuracy: {accuracy2}")
+
+print("\nConfusion Matrix:")
+y_pred = model2.predict(X_test)
+print(metrics.confusion_matrix(y_test, y_pred))
+plt.show()
+print("\nClassification report:")
+print(metrics.classification_report(y_test, model2.predict(X_test)))
+
 # %%
 
 ## we will now model and fit the data using our Logistic Regression
@@ -250,33 +269,17 @@ predict3 = model3.predict(X_test)
 # Evaluate the model
 accuracy3 = accuracy_score(y_test, predict3)
 print(f"Accuracy: {accuracy3}")
+# Print feature importance coefficients
+print("\nFeature Importance:")
+for feature, importance in zip(wine.columns, model3.coef_[0]):
+    print(f"{feature}: {importance}")
 
-# %%
-
-#model validation
-models=[model, model2, model3 ]
-
-#%%
-#decision trees
-
-y_pred = models[0].predict(X_test)
+print("\nConfusion Matrix:")
+y_pred = model3.predict(X_test)
 print(metrics.confusion_matrix(y_test, y_pred))
 plt.show()
-print(metrics.classification_report(y_test, models[0].predict(X_test)))
-
-# %%
-#knn
-y_pred = models[1].predict(X_test)
-print(metrics.confusion_matrix(y_test, y_pred))
-plt.show()
-print(metrics.classification_report(y_test, models[1].predict(X_test)))
-
-#%%
-#logistic regression
-y_pred = models[2].predict(X_test)
-print(metrics.confusion_matrix(y_test, y_pred))
-plt.show()
-print(metrics.classification_report(y_test, models[2].predict(X_test)))
+print("\nClassification report:")
+print(metrics.classification_report(y_test, model3.predict(X_test)))
 
 
 # %%[markdown]
