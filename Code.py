@@ -118,16 +118,6 @@ plt.title('Distribution of Wine Quality Scores')
 plt.grid(axis='y', linestyle='--', alpha=0.7)
 plt.show()
 
-# %%
-# 5- How will understanding and improving wine quality benefit winemakers, distributors, and wine consumers?
-
-#Distribution of Wines by Quality
-wine['quality'].value_counts().plot(kind='bar',figsize=(7, 6), rot=0, color="#C5B4E3")
-plt.xlabel("Quality")
-plt.ylabel("Count of wines")
-plt.title("Distribution of Wines by Quality")
-plt.show()
-
 #The number of ratings for wine quality '5' and '6' are much larger than that of 3 , 4 and 8.
 
 # %%
