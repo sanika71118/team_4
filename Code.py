@@ -475,3 +475,66 @@ plt.show()
 
 
 #%%
+
+### Regression Models
+
+from sklearn.linear_model import LinearRegression, Lasso, Ridge
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.preprocessing import StandardScaler
+
+
+# %%
+
+# Standardize the data
+scaler = StandardScaler()
+X_train_sscaled = scaler.fit_transform(X_train)
+X_test_sscaled = scaler.transform(X_test)
+
+# %%
+
+# Linear Regression
+linear_model = LinearRegression()
+linear_model.fit(X_train_sscaled, y_train)
+# Make predictions on the test set
+linear_predict = linear_model.predict(X_test_sscaled)
+
+# Evaluate Linear Regression
+linear_mse = mean_squared_error(y_test, linear_predict)
+linear_r2 = r2_score(y_test, linear_predict)
+print("Linear Regression:")
+print(f"Mean Squared Error: {linear_mse}")
+print(f"R-squared: {linear_r2}\n")
+
+# %%
+
+# Lasso Regression
+lasso_model = Lasso()
+lasso_model.fit(X_train_sscaled, y_train)
+
+# Make predictions on the test set
+lasso_predict = lasso_model.predict(X_test_sscaled)
+
+# Evaluate Lasso Regression
+lasso_mse = mean_squared_error(y_test, lasso_predict)
+lasso_r2 = r2_score(y_test, lasso_predict)
+print("Lasso Regression:")
+print(f"Mean Squared Error: {lasso_mse}")
+print(f"R-squared: {lasso_r2}\n")
+
+# %%
+
+# Ridge Regression
+ridge_model = Ridge()
+ridge_model.fit(X_train_sscaled, y_train)
+
+# Make predictions on the test set
+ridge_predict = ridge_model.predict(X_test_sscaled)
+
+# Evaluate Ridge Regression
+ridge_mse = mean_squared_error(y_test, ridge_predict)
+ridge_r2 = r2_score(y_test, ridge_predict)
+print("Ridge Regression:")
+print(f"Mean Squared Error: {ridge_mse}")
+print(f"R-squared: {ridge_r2}")
+
+# %%
