@@ -180,6 +180,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
+from sklearn.model_selection import cross_val_score
 #%%
 # make a column which gives best quality of wine as 1 and other as 0
 wine['best quality'] = [1 if x > 5 else 0 for x in wine.quality]
@@ -203,6 +204,7 @@ from sklearn.preprocessing import MinMaxScaler
 normalize = MinMaxScaler()
 X_train = normalize.fit_transform(X_train)
 X_test = normalize.transform(X_test)
+
 # %%
 
 # we will now model and fit the data using our Decision Trees 
@@ -211,17 +213,36 @@ model = DecisionTreeClassifier()
 # Train the model
 model.fit(X_train, y_train)
 
+# Perform 5-fold cross-validation
+cv_scores = cross_val_score(model, X_train, y_train, cv=5)
+mean_cv_accuracy = np.mean(cv_scores)
+print(f"Mean Cross-validation Accuracy: {mean_cv_accuracy}")
+
 # Make predictions on the test set
 predict = model.predict(X_test)
 
 # Evaluate the model
 accuracy = accuracy_score(y_test, predict)
-print(f"Accuracy: {accuracy}")
-# Print feature importance coefficients
+print(f"Test Accuracy: {accuracy}")
+train_accuracy = accuracy_score(y_train, model.predict(X_train))
+print(f"Train Accuracy: {train_accuracy}")
+
+
+# Print & plot feature importance coefficients
 print("\nFeature Importance:")
-for feature, importance in zip(wine.columns, model.feature_importances_):
+coefficients = model.feature_importances_
+for feature, importance in zip(attributes.columns, coefficients):
     print(f"{feature}: {importance}")
 
+abs_coefficients = np.abs(coefficients)
+# Create a bar plot
+plt.figure(figsize=(10, 6))
+plt.barh(attributes.columns, abs_coefficients, color='skyblue')
+plt.xlabel('Absolute Coefficient Values')
+plt.title('Feature Importances - Decision Tree')
+plt.show()
+
+# Print Confusion Matrix & Classification report
 print("\nConfusion Matrix:")
 y_pred = model.predict(X_test)
 print(metrics.confusion_matrix(y_test, y_pred))
@@ -240,9 +261,11 @@ model2.fit(X_train, y_train)
 # Make predictions on the test set
 predict2= model2.predict(X_test)
 
-# Evaluate the model0-
+# Evaluate the model
 accuracy2=accuracy_score(y_test, predict2)
-print(f"Accuracy: {accuracy2}")
+print(f"Test Accuracy: {accuracy2}")
+train_accuracy2 = accuracy_score(y_train, model2.predict(X_train))
+print(f"Train Accuracy: {train_accuracy2}")
 
 print("\nConfusion Matrix:")
 y_pred = model2.predict(X_test)
@@ -268,11 +291,27 @@ predict3 = model3.predict(X_test)
 
 # Evaluate the model
 accuracy3 = accuracy_score(y_test, predict3)
-print(f"Accuracy: {accuracy3}")
+print(f"Test Accuracy: {accuracy3}")
+
+# Perform 5-fold cross-validation during training
+cv_scores3 = cross_val_score(model3, X_train, y_train, cv=5)
+mean_cv_accuracy3 = np.mean(cv_scores3)
+print(f"Train Accuracy: {mean_cv_accuracy3}")
+
+
 # Print feature importance coefficients
+coefficients2 = model3.coef_[0]
 print("\nFeature Importance:")
-for feature, importance in zip(wine.columns, model3.coef_[0]):
+for feature, importance in zip(attributes.columns, coefficients2):
     print(f"{feature}: {importance}")
+
+# Create a bar plot of the feature importance
+abs_coefficients2 = np.abs(coefficients2)
+plt.figure(figsize=(10, 6))
+plt.barh(attributes.columns, abs_coefficients2, color='skyblue')
+plt.xlabel('Absolute Coefficient Values')
+plt.title('Feature Importances - Logistic Regression')
+plt.show()
 
 print("\nConfusion Matrix:")
 y_pred = model3.predict(X_test)
