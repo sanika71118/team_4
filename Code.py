@@ -98,7 +98,7 @@ attributes = wine.drop(['quality', 'Type'], axis=1)
 quality = wine['quality'] 
 correlation_matrix = attributes.corrwith(quality)
 plt.figure(figsize=(10, 8))
-sns.heatmap(correlation_matrix.to_frame(), annot=True, cmap='rainbow', cbar=True, fmt=".2f" )
+sns.heatmap(correlation_matrix.to_frame(), annot=True, cmap='coolwarm', cbar=True, fmt=".2f" )
 plt.title('Correlation Between Attributes and Wine Quality Ratings')
 plt.xlabel('Correlation Coefficient')
 plt.ylabel('Attributes')
@@ -109,12 +109,12 @@ plt.show()
 # 4- What is the range of wine quality scores, and how can we improve this range through analysis and recommendations?
 
 quality_scores = wine['quality']
-
 plt.figure(figsize=(10, 8))
-sns.barplot(x=quality_scores.value_counts().index, y=quality_scores.value_counts(), color="lightpink", edgecolor='black', alpha=0.7)
+plt.hist(quality_scores, bins=range(1, 11), edgecolor='black', alpha=0.7)
 plt.xlabel('Wine Quality Score')
 plt.ylabel('Frequency')
 plt.title('Distribution of Wine Quality Scores')
+plt.xticks(range(1, 11)) 
 plt.grid(axis='y', linestyle='--', alpha=0.7)
 plt.show()
 
