@@ -57,11 +57,6 @@ plt.ylabel('Average Quality Score')
 plt.title('Average Quality Score by Wine Type')
 plt.show()
 
-
-
-
-#%%
-
 #Splitting the dataset into two new types red and white wine:
 red_wines = wine[wine['Type'] == 'Red Wine']
 white_wines = wine[wine['Type'] == 'White Wine']
@@ -92,7 +87,7 @@ plt.show()
 
 
 # %%
-# 3- Can we quantitatively measure the correlations between all attributes and wine quality ratings?
+# 2- Can we quantitatively measure the correlations between all attributes and wine quality ratings?
 
 attributes = wine.drop(['quality', 'Type'], axis=1) 
 quality = wine['quality'] 
@@ -106,7 +101,7 @@ plt.show()
 
 
 # %%
-# 4- What is the range of wine quality scores, and how can we improve this range through analysis and recommendations?
+# 3- What is the range of wine quality scores, and how can we improve this range through analysis and recommendations?
 
 quality_scores = wine['quality']
 
@@ -162,7 +157,7 @@ In simple terms, the test results suggest that there is a statistically signific
 """
 
 # %%
-#2- Can machine learning models accurately predict wine quality based on its chemical composition, and if yes, which algorithms perform the best?
+#4- Can machine learning models accurately predict wine quality based on its chemical composition, and if yes, which algorithms perform the best?
 # model development 
 
 
